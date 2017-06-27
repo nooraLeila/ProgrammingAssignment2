@@ -103,3 +103,28 @@ In order to complete this assignment, you must do the following:
 ### Grading
 
 This assignment will be graded via peer assessment.
+
+makeCacheMatrix <- function(x = numeric()) { #set up function and empty vector 
+  m <- NULL #important if there is no cache
+  set <- function(y) {
+    x <<- y # putting x into set function
+    m <<- NULL 
+  }
+  get <- function() x
+  setsolve <- function(solve) m <<- solve 
+  getsolve <- function() m
+  list(set = set, get = get,
+       setsolve = setsolve,
+       getsolve = getsolve)
+}
+cacheSolve <- function(x, ...) {
+  m <- x$getsolve() #check if there is a value for m
+  if(!is.null(m)) { #if there is then return m
+    message("getting cached data")
+    return(m)
+  }
+  data <- x$get() 
+  m <- solve(data, ...) #create the inverted matrix
+  x$setsolve(m)
+  m
+}
